@@ -53,7 +53,7 @@ Generate the documentation using the following Markdown structure:
 
 # Hackathon Documentation: Project OrgaLink AI
 
-## 1. Problem & Fit (Rubric Score: 25%)
+## 1. Problem & Fit
 * **Target User:** [Define the specific student org officer or applicant experiencing the problem]
 * **The Core Pain Point:** [Explain the exact operational bottleneck in recruitment and manual file sorting]
 * **The Solution Fit:** [How this digital portal solves that exact bottleneck cleanly]
