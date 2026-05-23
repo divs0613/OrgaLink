@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrgaLink AI - Recruitment Status Tracker</title>
+  <meta name="description" content="Check your application vetting status and onboarding requirements on the OrgaLink AI Status Tracker page.">
+  
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow-container">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <i class="fa-solid fa-network-wired logo-icon"></i>
+        </div>
+        <div class="brand-text">
+          <h1>OrgaLink <span class="accent-text">AI</span></h1>
+          <p class="tagline">Next-Gen Intelligent Student Org Onboarding & Recruitment</p>
+        </div>
+      </div>
+      
+      <!-- Navigation Links -->
+      <nav class="app-nav">
+        <a href="index.html" class="nav-link"><i class="fa-solid fa-pen-clip"></i> Apply Now</a>
+        <a href="tracker.html" class="nav-link active"><i class="fa-solid fa-route"></i> Check Status</a>
+        <a href="officer.html" class="nav-link"><i class="fa-solid fa-user-shield"></i> Officer Portal</a>
+      </nav>
+
+      <div class="system-status">
+        <span class="status-indicator online"></span>
+        <span class="status-text">Gemini-3-Flash Connected</span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-layout">
+      <!-- Search Panel -->
+      <section class="grid-card lookup-section">
+        <div class="card-header">
+          <div class="header-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+          <h2>Lookup Applicant Status</h2>
+        </div>
+        <p>Enter your registration email address to check your vetting results, timeline status, and access onboarding tasks.</p>
+        
+        <form id="status-search-form" class="search-bar">
+          <div class="input-wrapper">
+            <i class="fa-regular fa-envelope input-icon"></i>
+            <input type="email" id="search-email" placeholder="alex.rivera@student.edu" required>
+          </div>
+          <button type="submit" class="primary-btn"><i class="fa-solid fa-search"></i> Search</button>
+        </form>
+      </section>
+
+      <!-- Status Results Dashboard (Hidden by default) -->
+      <div id="tracker-results-container" class="hidden">
+        <!-- Grid layout for results -->
+        <div class="main-grid">
+          <!-- Left Widget: Profile & Placement Results -->
+          <section class="grid-card">
+            <div class="card-header">
+              <div class="header-icon"><i class="fa-regular fa-id-card"></i></div>
+              <h2>Application Profile</h2>
+            </div>
+            
+            <div class="applicant-profile-summary">
+              <div class="profile-item">
+                <span>Full Name</span>
+                <strong id="summary-name">Alex Rivera</strong>
+              </div>
+              <div class="profile-item">
+                <span>Student ID</span>
+                <strong id="summary-student-id">2023-10043</strong>
+              </div>
+              <div class="profile-item">
+                <span>Contact Number</span>
+                <strong id="summary-phone">+63 917 123 4567</strong>
+              </div>
+              <div class="profile-item">
+                <span>Major / Course</span>
+                <strong id="summary-course">BS Computer Science</strong>
+              </div>
+              <div class="profile-item">
+                <span>Year Level</span>
+                <strong id="summary-year">2nd Year</strong>
+              </div>
+              <div class="profile-item">
+                <span>Applied Date</span>
+                <strong id="summary-date">05/23/2026</strong>
+              </div>
+            </div>
+
+            <!-- Committee Placement Card -->
+            <div class="analysis-result-panel" style="margin-top: 1rem;">
+              <div class="result-header">
+                <h3><i class="fa-solid fa-square-poll-vertical"></i> Match Classification</h3>
+                <span class="match-score-badge" id="summary-score">94% Match</span>
+              </div>
+              <div class="placement-badge" id="summary-placement">Web Development</div>
+              <div class="result-block">
+                <h4><i class="fa-solid fa-brain"></i> Contextual Evaluation</h4>
+                <p id="summary-reasoning">Applicant shows exceptional proficiency in HTML/CSS and frontend UI design based on semantic context analysis.</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Right Widget: Timeline Progress -->
+          <section class="grid-card">
+            <div class="card-header">
+              <div class="header-icon"><i class="fa-solid fa-route"></i></div>
+              <h2>Recruitment Status Tracker</h2>
+            </div>
+            
+            <div class="tracker-timeline" id="status-timeline">
+              <div class="timeline-step" data-step="1">
+                <div class="step-circle"><i class="fa-regular fa-paper-plane"></i></div>
+                <div class="step-content">
+                  <h3>Applied</h3>
+                  <p>Form and documents submitted</p>
+                </div>
+              </div>
+              <div class="timeline-step" data-step="2">
+                <div class="step-circle"><i class="fa-regular fa-comments"></i></div>
+                <div class="step-content">
+                  <h3>Interview</h3>
+                  <p>Vetting & Interview scheduled</p>
+                </div>
+              </div>
+              <div class="timeline-step" data-step="3">
+                <div class="step-circle"><i class="fa-regular fa-handshake"></i></div>
+                <div class="step-content">
+                  <h3>Approved</h3>
+                  <p>Admitted as official member</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Onboarding Checklist Wrapper -->
+            <div id="onboarding-checklist-wrapper" style="margin-top: 2rem;">
+              <!-- Locked state container -->
+              <div id="checklist-locked-box" class="alert-info-box">
+                <i class="fa-solid fa-lock"></i>
+                <h3>Onboarding Checklist Locked</h3>
+                <p>This checklist contains confidential member onboarding materials and becomes accessible once your recruitment is approved by the organization administrator.</p>
+              </div>
+
+              <!-- Unlocked checklist state -->
+              <div id="checklist-unlocked-box" class="hidden">
+                <div class="card-header-flex">
+                  <div class="card-header" style="margin-bottom: 0;">
+                    <div class="header-icon"><i class="fa-solid fa-list-check"></i></div>
+                    <h3>Member Onboarding Tasks</h3>
+                  </div>
+                  <div class="progress-container">
+                    <span class="progress-text" id="checklist-progress-text">0 of 5 completed</span>
+                    <div class="progress-bar-bg">
+                      <div class="progress-bar" id="checklist-progress-bar" style="width: 0%;"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="checklist-items">
+                  <label class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox" data-task="0">
+                    <span class="checkbox-custom"><i class="fa-solid fa-check"></i></span>
+                    <span class="checklist-text">Join the JPCS-APC Slack & Discord channels</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox" data-task="1">
+                    <span class="checkbox-custom"><i class="fa-solid fa-check"></i></span>
+                    <span class="checklist-text">Complete the technical/creative committee workshop</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox" data-task="2">
+                    <span class="checkbox-custom"><i class="fa-solid fa-check"></i></span>
+                    <span class="checklist-text">Submit directory bio photo and contact credentials</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox" data-task="3">
+                    <span class="checkbox-custom"><i class="fa-solid fa-check"></i></span>
+                    <span class="checklist-text">Attend the general welcome orientation assembly</span>
+                  </label>
+                  <label class="checklist-item">
+                    <input type="checkbox" class="checklist-checkbox" data-task="4">
+                    <span class="checkbox-custom"><i class="fa-solid fa-check"></i></span>
+                    <span class="checklist-text">Review and digitally sign the org terms of conduct</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 OrgaLink AI. Built with ❤️ for the Student Org Hackathon.</p>
+    </footer>
+  </div>
+
+  <script src="tracker.js"></script>
+</body>
+</html>

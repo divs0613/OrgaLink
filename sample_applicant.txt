@@ -1,0 +1,3 @@
+Name: Alex Rivera
+Bio:
+I am a passionate software engineering student with extensive experience in web application development. I love building responsive user interfaces using HTML, CSS, and modern JavaScript. I have built several projects using React, Node.js, and SQL databases. I regularly use Git for source control and collaborative programming. I am eager to join the engineering squad to deploy fullstack solutions.

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrgaLink AI - Smart Student Org Onboarding</title>
+  <meta name="description" content="OrgaLink AI is an advanced, AI-powered student organization onboarding portal that uses Gemini File Search RAG technology to streamline applicant vetting and matching.">
+  
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow-container">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <i class="fa-solid fa-network-wired logo-icon"></i>
+        </div>
+        <div class="brand-text">
+          <h1>OrgaLink <span class="accent-text">AI</span></h1>
+          <p class="tagline">Next-Gen Intelligent Student Org Onboarding & Recruitment</p>
+        </div>
+      </div>
+      
+      <!-- Navigation Links -->
+      <nav class="app-nav">
+        <a href="index.html" class="nav-link active"><i class="fa-solid fa-pen-clip"></i> Apply Now</a>
+        <a href="tracker.html" class="nav-link"><i class="fa-solid fa-route"></i> Check Status</a>
+        <a href="officer.html" class="nav-link"><i class="fa-solid fa-user-shield"></i> Officer Portal</a>
+      </nav>
+
+      <div class="system-status">
+        <span class="status-indicator online"></span>
+        <span class="status-text">Gemini-3-Flash Connected</span>
+      </div>
+    </header>
+
+    <!-- Main Grid Content -->
+    <main class="main-grid">
+      <!-- Left Column: Form & File Upload -->
+      <section class="grid-card form-section" id="application-card">
+        <div class="card-header">
+          <div class="header-icon"><i class="fa-solid fa-id-card"></i></div>
+          <h2>Applicant Registration</h2>
+        </div>
+        
+        <form id="rag-application-form" class="app-form">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="full-name">Full Name</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-user input-icon"></i>
+                <input type="text" id="full-name" placeholder="Alex Rivera" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email-address">Email Address</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" id="email-address" placeholder="alex.rivera@student.edu" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="student-number">Student Number</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-id-badge input-icon"></i>
+                <input type="text" id="student-number" placeholder="2023-10043" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-number">Contact Number</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-phone input-icon"></i>
+                <input type="tel" id="contact-number" placeholder="+63 917 123 4567" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="year-level">Year Level</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-graduation-cap input-icon"></i>
+                <select id="year-level" required>
+                  <option value="" disabled selected>Select Year Level</option>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="course-major">Course / Major</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-book-open input-icon"></i>
+                <select id="course-major" required>
+                  <option value="" disabled selected>Select Course / Major</option>
+                  <option value="BS Computer Science">BS Computer Science</option>
+                  <option value="BS Information Technology">BS Information Technology</option>
+                  <option value="BS Information Systems">BS Information Systems</option>
+                  <option value="BS Computer Engineering">BS Computer Engineering</option>
+                  <option value="BS Multimedia Arts">BS Multimedia Arts</option>
+                  <option value="BS Business Administration">BS Business Administration</option>
+                  <option value="Other">Other Major</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Upload Biography, Resume or Portfolio (.txt, .pdf, .docx)</label>
+            <div class="upload-zone" id="drop-zone">
+              <input type="file" id="file-upload" accept=".txt,.pdf,.docx" hidden>
+              <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+              <p class="upload-main-text">Drag & drop your file here or <span class="browse-link">browse</span></p>
+              <p class="upload-sub-text">Supported file types: Plain Text (.txt), PDF (.pdf), Word (.docx)</p>
+              <div id="file-info-badge" class="file-badge hidden">
+                <i class="fa-regular fa-file-lines"></i>
+                <span id="file-name-text">filename.txt</span>
+                <button type="button" id="remove-file-btn" class="remove-btn"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" id="submit-rag-btn" class="primary-btn pulse-glow">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Analyze with Gemini File Search</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- Right Column: SDK Terminal & RAG Feedback -->
+      <section class="grid-card console-section" id="terminal-card">
+        <div class="card-header">
+          <div class="header-icon"><i class="fa-solid fa-terminal"></i></div>
+          <h2>Gemini SDK File Search RAG Console</h2>
+        </div>
+        <div class="terminal-wrapper">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="terminal-title">python-gemini-sdk-runtime</div>
+          </div>
+          <div class="terminal-body" id="sdk-terminal">
+            <div class="terminal-line system-msg"># Ready for execution. Submit the form to trigger the backend RAG flow.</div>
+          </div>
+        </div>
+
+        <div class="analysis-result-panel hidden" id="analysis-results">
+          <div class="result-header">
+            <h3><i class="fa-solid fa-square-poll-vertical"></i> Committee Placement Match</h3>
+            <span class="match-score-badge" id="match-score">94% Match</span>
+          </div>
+          <div class="placement-badge" id="placement-committee">Web Development</div>
+          
+          <div class="result-block">
+            <h4><i class="fa-solid fa-brain"></i> RAG Insights & Recommendation</h4>
+            <p id="analysis-reasoning">Applicant shows exceptional proficiency in HTML/CSS and frontend UI design based on semantic context analysis.</p>
+          </div>
+          
+          <div class="result-navigation-tip">
+            <p class="tip-text"><i class="fa-solid fa-info-circle"></i> Application saved! Head over to the <a href="tracker.html" class="accent-link">Status Tracker</a> to check recruitment updates.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Explore Committee Positions Section -->
+      <section class="grid-card span-full" id="roles-explore-card">
+        <div class="card-header">
+          <div class="header-icon"><i class="fa-solid fa-circle-nodes"></i></div>
+          <h2>Available Committee Positions</h2>
+        </div>
+        
+        <div class="roles-grid">
+          <!-- Web Dev Committee -->
+          <div class="role-committee-card web-dev">
+            <div class="role-header">
+              <i class="fa-solid fa-code"></i>
+              <h3>Web Development</h3>
+            </div>
+            <p class="role-intro">Responsible for building, deploying, and maintaining digital assets, websites, and database storage arrays.</p>
+            <ul class="role-list">
+              <li><strong>Frontend Developer:</strong> Structures and designs client-side user interfaces with responsive frameworks.</li>
+              <li><strong>Backend Developer:</strong> Handles core API routing, logic integrations, and local microservice components.</li>
+              <li><strong>Fullstack Engineer:</strong> Interfaces between data layers and interactive layouts to streamline user flows.</li>
+              <li><strong>Database Admin:</strong> Monitors caching structures, sync pipelines, and local data persistence mechanisms.</li>
+            </ul>
+          </div>
+
+          <!-- Marketing Committee -->
+          <div class="role-committee-card marketing">
+            <div class="role-header">
+              <i class="fa-solid fa-palette"></i>
+              <h3>Marketing & Creatives</h3>
+            </div>
+            <p class="role-intro">Oversees official branding campaigns, creative design assets, and digital promotion structures.</p>
+            <ul class="role-list">
+              <li><strong>Graphic Designer:</strong> Illustrates high-fidelity graphics, vector assets, and brand banners.</li>
+              <li><strong>UI/UX Designer:</strong> Crafts visual layouts, interaction flows, and high-fidelity prototype sketches.</li>
+              <li><strong>Content Writer:</strong> Composes copy documents, newsletters, and promotional announcements.</li>
+              <li><strong>Social Media Manager:</strong> Deploys schedules, monitors SEO signals, and maintains target channel views.</li>
+            </ul>
+          </div>
+
+          <!-- Logistics Committee -->
+          <div class="role-committee-card logistics">
+            <div class="role-header">
+              <i class="fa-solid fa-clipboard-list"></i>
+              <h3>Logistics & Operations</h3>
+            </div>
+            <p class="role-intro">Orchestrates scheduling timelines, handles budgets, and manages internal and external operations.</p>
+            <ul class="role-list">
+              <li><strong>Event Planner:</strong> Drafts coordinate itineraries, schedules hackathons, and manages agendas.</li>
+              <li><strong>Sponsor Liaison:</strong> Interfaces with external partners, sponsors, and campus administrators.</li>
+              <li><strong>Operations Manager:</strong> Oversees staff directories, tracks venue bookings, and coordinates meetings.</li>
+              <li><strong>Finance Officer:</strong> Balances organizational ledger sheets, budget allocations, and procurement.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 OrgaLink AI. Built with ❤️ for the Student Org Hackathon.</p>
+    </footer>
+  </div>
+
+  <!-- PDFJS and Mammoth Libraries for client-side scanning -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  
+  <script src="script.js"></script>
+</body>
+</html>

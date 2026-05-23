@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OrgaLink AI - Officer Portal</title>
+  <meta name="description" content="Secure administrative panel for JPCS-APC recruitment officers to review applicant RAG matches and manage checklist access.">
+  
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow-container">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-wrapper">
+          <i class="fa-solid fa-network-wired logo-icon"></i>
+        </div>
+        <div class="brand-text">
+          <h1>OrgaLink <span class="accent-text">AI</span></h1>
+          <p class="tagline">Next-Gen Intelligent Student Org Onboarding & Recruitment</p>
+        </div>
+      </div>
+      
+      <!-- Navigation Links -->
+      <nav class="app-nav">
+        <a href="index.html" class="nav-link"><i class="fa-solid fa-pen-clip"></i> Apply Now</a>
+        <a href="tracker.html" class="nav-link"><i class="fa-solid fa-route"></i> Check Status</a>
+        <a href="officer.html" class="nav-link active"><i class="fa-solid fa-user-shield"></i> Officer Portal</a>
+      </nav>
+
+      <div class="system-status">
+        <span class="status-indicator online"></span>
+        <span class="status-text">Gemini-3-Flash Connected</span>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-layout">
+      
+      <!-- 1. Secure Login View -->
+      <section class="grid-card login-card" id="admin-login-view">
+        <div class="login-header">
+          <div class="header-icon" style="margin: 0 auto; width: 48px; height: 48px; font-size: 1.5rem;">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h2>Officer Login</h2>
+          <p class="tagline">Sign in to manage applicants</p>
+        </div>
+
+        <form id="admin-login-form" class="app-form">
+          <div class="form-group">
+            <label for="admin-email">Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope input-icon"></i>
+              <input type="email" id="admin-email" placeholder="admin@gmail.com" required autocomplete="username">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="admin-password">Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="admin-password" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+          </div>
+
+          <button type="submit" class="primary-btn"><i class="fa-solid fa-right-to-bracket"></i> Authenticate</button>
+        </form>
+      </section>
+
+      <!-- 2. Secure Dashboard View -->
+      <div id="admin-dashboard-view" class="hidden">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header-panel">
+          <div>
+            <h2>Recruitment Management Panel</h2>
+            <p class="tagline">Candidate evaluations, stage approvals, and committee metrics</p>
+          </div>
+          <button id="logout-btn" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</button>
+        </div>
+
+        <!-- Metric Counter Cards -->
+        <div class="stats-panel">
+          <div class="stat-card">
+            <div class="stat-icon applied"><i class="fa-solid fa-inbox"></i></div>
+            <div class="stat-details">
+              <h4>Total Candidates</h4>
+              <span id="stat-total">0</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon interview"><i class="fa-solid fa-comments"></i></div>
+            <div class="stat-details">
+              <h4>In Interview</h4>
+              <span id="stat-interview">0</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon onboarded"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="stat-details">
+              <h4>Approved / Onboarded</h4>
+              <span id="stat-onboarded">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Committee Distribution breakdown -->
+        <div class="committee-breakdown-panel">
+          <div class="breakdown-card">
+            <span>Web Development Committee:</span>
+            <strong id="committee-web-count">0</strong>
+          </div>
+          <div class="breakdown-card">
+            <span>Marketing & Creatives Committee:</span>
+            <strong id="committee-marketing-count">0</strong>
+          </div>
+          <div class="breakdown-card">
+            <span>Logistics Committee:</span>
+            <strong id="committee-logistics-count">0</strong>
+          </div>
+        </div>
+
+        <!-- Candidates Database Controls & Table -->
+        <section class="grid-card span-full" style="padding: 1.25rem;">
+          <div class="dashboard-controls">
+            <div class="card-header" style="margin-bottom: 0;">
+              <div class="header-icon"><i class="fa-solid fa-users-viewfinder"></i></div>
+              <h3>Registered Candidates</h3>
+            </div>
+            
+            <!-- Filters and Sorting options -->
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <div class="filter-group">
+                <label for="filter-status">Filter Status:</label>
+                <div class="filter-wrapper">
+                  <select id="filter-status" class="filter-select">
+                    <option value="all">All Candidates</option>
+                    <option value="accepted">Accepted / Approved</option>
+                    <option value="pending">Pending Review</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="filter-group">
+                <label for="sort-by">Sort By:</label>
+                <div class="filter-wrapper">
+                  <select id="sort-by" class="filter-select">
+                    <option value="date-desc">Latest Applied</option>
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="score-desc">Match Score (Highest)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="admin-table" id="applicants-table">
+              <thead>
+                <tr>
+                  <th>Applicant Details</th>
+                  <th>Student ID & Year</th>
+                  <th>Recommended Committee</th>
+                  <th>Score</th>
+                  <th>Status Timeline</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+                <!-- Table rows injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+    </main>
+
+    <!-- Details Overlay Modal -->
+    <div id="applicant-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <button id="modal-close-btn" class="modal-close-btn"><i class="fa-solid fa-xmark"></i></button>
+        <div class="card-header">
+          <div class="header-icon"><i class="fa-solid fa-address-card"></i></div>
+          <h2 id="modal-title">Candidate Evaluation Profile</h2>
+        </div>
+        
+        <div class="modal-grid-2">
+          <div class="profile-item">
+            <span>Name</span>
+            <strong id="modal-name">Alex Rivera</strong>
+          </div>
+          <div class="profile-item">
+            <span>Email</span>
+            <strong id="modal-email">alex@gmail.com</strong>
+          </div>
+          <div class="profile-item">
+            <span>Student Number</span>
+            <strong id="modal-id">2023-10023</strong>
+          </div>
+          <div class="profile-item">
+            <span>Contact Number</span>
+            <strong id="modal-phone">+63 917 123 4567</strong>
+          </div>
+          <div class="profile-item">
+            <span>Course & Year</span>
+            <strong id="modal-course-year">BSCS - 2nd Year</strong>
+          </div>
+          <div class="profile-item">
+            <span>Uploaded File</span>
+            <strong id="modal-filename">resume.pdf</strong>
+          </div>
+        </div>
+
+        <div class="analysis-result-panel">
+          <div class="result-header">
+            <h3><i class="fa-solid fa-server"></i> Simulated Gemini Output</h3>
+            <span class="match-score-badge" id="modal-score">94% Match</span>
+          </div>
+          <div class="placement-badge" id="modal-committee">Web Development</div>
+          
+          <div class="result-block">
+            <h4>Evaluation Summary</h4>
+            <p id="modal-reasoning">RAG logic reasons analysis notes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>&copy; 2026 OrgaLink AI. Built with ❤️ for the Student Org Hackathon.</p>
+    </footer>
+  </div>
+
+  <script src="officer.js"></script>
+</body>
+</html>
