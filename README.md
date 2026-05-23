@@ -69,17 +69,17 @@ Generate the documentation using the following Markdown structure:
   * **Frontend:** *Tailwind CSS* — For faster, utility-first UI styling without writing custom CSS stylesheets.
   * **Backend & Database:** *Supabase / Firebase* — A beginner-friendly backend to securely store real-time applicant data and session authentication state.
 
-## 3. Meaningful AI Use Case & File Search RAG (Rubric Score: 30%)
+## 3. Meaningful AI Use Case & File Search RAG 
 * **Gemini Retrieval-Augmented Generation (RAG):**
   * **File Store Upload Pipeline:** Integrates custom text chunking and indexing mechanisms mimicking the speaker's Python backend flow to upload student files straight to `client.file_search_stores`.
   * **Contextual Evaluation Tool:** Passes uploaded documents into `types.FileSearch()` alongside the `gemini-3-flash-preview` model, ensuring semantic parsing over manual student history.
 * **Value Add:** [Why standard hardcoded forms fail where Gemini succeeds in placing applicants]
 
-## 4. Technical MVP Architecture (Rubric Score: 30%)
+## 4. Technical MVP Architecture
 * **Structural Blueprint (`index.html`):** [Role of the layout elements in the core demo flow]
 * **Aesthetics & Layout (`style.css`):** [How the visual interface remains premium yet clean]
 * **State & Logic (`script.js`):** [How the status tracker and simulated asynchronous AI functions execute]
 
-## 5. Pitch & Product Storytelling (Rubric Score: 15%)
+## 5. Pitch & Product Storytelling
 * **The Hook:** [A powerful 1-2 sentence introduction opening for the live presentation pitch]
 * **The Demo Narrative:** [A step-by-step walkthrough script for a 3-minute presentation that proves the MVP is fully functional]
