@@ -15,20 +15,21 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="glow-container">
-    <div class="glow-orb orb-1"></div>
-    <div class="glow-orb orb-2"></div>
-  </div>
 
   <div class="app-container">
     <!-- Header -->
     <header class="app-header">
       <div class="brand">
         <div class="logo-wrapper">
-          <i class="fa-solid fa-network-wired logo-icon"></i>
+          <!-- Concentric Circle Minimalist Logo -->
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2.25"/>
+            <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1.25" stroke-dasharray="2 1.5"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+          </svg>
         </div>
         <div class="brand-text">
-          <h1>OrgaLink <span class="accent-text">AI</span></h1>
+          <h1>OrgaLink AI</h1>
           <p class="tagline">Next-Gen Intelligent Student Org Onboarding & Recruitment</p>
         </div>
       </div>
@@ -131,7 +132,7 @@
               <input type="file" id="file-upload" accept=".txt,.pdf,.docx" hidden>
               <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
               <p class="upload-main-text">Drag & drop your file here or <span class="browse-link">browse</span></p>
-              <p class="upload-sub-text">Supported file types: Plain Text (.txt), PDF (.pdf), Word (.docx)</p>
+              <p class="upload-sub-text">Supported file formats: Plain Text (.txt), PDF (.pdf), Word (.docx)</p>
               <div id="file-info-badge" class="file-badge hidden">
                 <i class="fa-regular fa-file-lines"></i>
                 <span id="file-name-text">filename.txt</span>
@@ -140,7 +141,7 @@
             </div>
           </div>
 
-          <button type="submit" id="submit-rag-btn" class="primary-btn pulse-glow">
+          <button type="submit" id="submit-rag-btn" class="primary-btn">
             <i class="fa-solid fa-wand-magic-sparkles"></i>
             <span>Analyze with Gemini File Search</span>
           </button>
@@ -156,9 +157,9 @@
         <div class="terminal-wrapper">
           <div class="terminal-header">
             <div class="terminal-dots">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
             </div>
             <div class="terminal-title">python-gemini-sdk-runtime</div>
           </div>
@@ -243,7 +244,7 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-      <p>&copy; 2026 OrgaLink AI. Built with ❤️ for the Student Org Hackathon.</p>
+      <p>&copy; 2026 OrgaLink AI. Built for the JPCS-APC Student Org Onboarding Portal.</p>
     </footer>
   </div>
 

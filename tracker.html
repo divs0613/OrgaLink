@@ -15,20 +15,21 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="glow-container">
-    <div class="glow-orb orb-1"></div>
-    <div class="glow-orb orb-2"></div>
-  </div>
 
   <div class="app-container">
     <!-- Header -->
     <header class="app-header">
       <div class="brand">
         <div class="logo-wrapper">
-          <i class="fa-solid fa-network-wired logo-icon"></i>
+          <!-- Concentric Circle Minimalist Logo -->
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2.25"/>
+            <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1.25" stroke-dasharray="2 1.5"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+          </svg>
         </div>
         <div class="brand-text">
-          <h1>OrgaLink <span class="accent-text">AI</span></h1>
+          <h1>OrgaLink AI</h1>
           <p class="tagline">Next-Gen Intelligent Student Org Onboarding & Recruitment</p>
         </div>
       </div>
@@ -54,7 +55,7 @@
           <div class="header-icon"><i class="fa-solid fa-magnifying-glass"></i></div>
           <h2>Lookup Applicant Status</h2>
         </div>
-        <p>Enter your registration email address to check your vetting results, timeline status, and access onboarding tasks.</p>
+        <p>Enter your registration email address to check your vetting results and access onboarding tasks.</p>
         
         <form id="status-search-form" class="search-bar">
           <div class="input-wrapper">
@@ -67,7 +68,6 @@
 
       <!-- Status Results Dashboard (Hidden by default) -->
       <div id="tracker-results-container" class="hidden">
-        <!-- Grid layout for results -->
         <div class="main-grid">
           <!-- Left Widget: Profile & Placement Results -->
           <section class="grid-card">
@@ -208,7 +208,7 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-      <p>&copy; 2026 OrgaLink AI. Built with ❤️ for the Student Org Hackathon.</p>
+      <p>&copy; 2026 OrgaLink AI. Built for the JPCS-APC Student Org Onboarding Portal.</p>
     </footer>
   </div>
 

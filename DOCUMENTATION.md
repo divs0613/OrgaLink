@@ -28,7 +28,7 @@
   * **[index.html](file:///Users/gargallograce/JPCS-APC/index.html) (Registration & Vetting):** Features candidate forms with input fields (Student number, Phone, Year level, Course), a drag-and-drop file upload zone (TXT/PDF/DOCX), a live RAG SDK execution console, and a **Committee Roles Directory** detail at the bottom listing available jobs.
   * **[tracker.html](file:///Users/gargallograce/JPCS-APC/tracker.html) (Student Lookup):** Allows candidates to search for their profiles by email. Renders a refined 3-step status timeline (Applied ➔ Interview ➔ Approved). Unlocks the onboarding checklist widget *only* after approval.
   * **[officer.html](file:///Users/gargallograce/JPCS-APC/officer.html) (Admin Dashboard):** Secure officer entrance (`admin@gmail.com` / `admin123`). Displays metrics (Total candidates, Interview status, Approved count), candidate distribution counters for each committee, custom sorting/filtering, and detailed evaluation profiles.
-* **Aesthetics & Layout (`style.css`):** Formulates an premium, immersive dark-mode workspace utilizing frosted glass containers (glassmorphism), neon violet-to-blue accents, glowing vector overlays, and a grid responsive breakpoint hierarchy.
+* **Aesthetics & Layout (`style.css`):** Formulates a premium, clean B&W minimalist workspace utilizing thin structural borders, flat tables, high-contrast typography, and a single electric blue (`#0070f3`) outline accent (inspired by Vercel/Linear).
 * **State & Logic (`script.js`, `tracker.js`, `officer.js`):** Syncs registration payloads, handles browser file buffer extractions, monitors progress percentages, and updates candidate status flags.
 
 ## 5. Pitch & Product Storytelling

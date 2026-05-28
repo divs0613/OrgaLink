@@ -160,78 +160,80 @@ document.addEventListener('DOMContentLoaded', () => {
     tableBody.innerHTML = '';
 
     if (filteredApplicants.length === 0) {
-      tableBody.innerHTML = `
-        <tr>
-          <td colspan="6" class="empty-table-msg">
-            <i class="fa-regular fa-folder-open"></i>
-            <p>No candidates match the selected filters.</p>
+      const emptyRow = document.createElement('tr');
+      emptyRow.innerHTML = `
+        <td colspan="6" class="empty-table-msg">
+          <i class="fa-solid fa-folder-open" style="display: block; margin-bottom: 0.5rem; font-size: 1.5rem; color: var(--text-muted);"></i>
+          No candidates found matching the selected filters.
+        </td>
+      `;
+      tableBody.appendChild(emptyRow);
+    } else {
+      filteredApplicants.forEach(app => {
+        const row = document.createElement('tr');
+
+        // Status Badge styling
+        let statusBadge = '';
+        if (app.status === 'Approved') {
+          statusBadge = '<span class="badge green">Approved</span>';
+        } else if (app.status === 'Interview') {
+          statusBadge = '<span class="badge purple">Interview</span>';
+        } else {
+          statusBadge = '<span class="badge blue">Applied</span>';
+        }
+
+        // Action Buttons
+        const viewBtn = `<button class="action-btn view" title="View Profile Details"><i class="fa-regular fa-eye"></i></button>`;
+        
+        // Interview Button (only visible/enabled for Applied candidates)
+        const isApplied = app.status === 'Applied';
+        const interviewBtn = `<button class="action-btn interview ${isApplied ? '' : 'disabled'}" ${isApplied ? '' : 'disabled'} title="Move to Interview"><i class="fa-regular fa-comments"></i></button>`;
+
+        // Approval Toggle Button (toggles approved status)
+        const isApproved = app.status === 'Approved';
+        const approveBtn = `<button class="action-btn approve ${isApproved ? 'active' : ''}" title="${isApproved ? 'Undo Approval' : 'Approve Candidate'}"><i class="${isApproved ? 'fa-solid fa-rotate-left' : 'fa-solid fa-check'}"></i></button>`;
+
+        // Delete Button
+        const deleteBtn = `<button class="action-btn delete" title="Delete record"><i class="fa-regular fa-trash-can"></i></button>`;
+
+        row.innerHTML = `
+          <td>
+            <div style="display: flex; flex-direction: column;">
+              <strong style="color: var(--text-primary); font-weight: 600;">${app.fullName}</strong>
+              <span style="color: var(--text-muted); font-size: 0.75rem;">${app.email}</span>
+            </div>
           </td>
-        </tr>
-      `;
-      return;
+          <td>
+            <div style="display: flex; flex-direction: column;">
+              <strong>${app.studentNumber || 'N/A'}</strong>
+              <span style="color: var(--text-muted); font-size: 0.75rem;">${app.courseMajor || 'N/A'} - Yr ${app.yearLevel || 'N/A'}</span>
+            </div>
+          </td>
+          <td><span class="placement-badge" style="margin: 0; padding: 0.15rem 0.5rem; font-size: 0.75rem;">${app.committee}</span></td>
+          <td><strong>${app.score}%</strong></td>
+          <td>${statusBadge}</td>
+          <td>
+            <div class="action-btns">
+              ${viewBtn}
+              ${interviewBtn}
+              ${approveBtn}
+              ${deleteBtn}
+            </div>
+          </td>
+        `;
+
+        // Event listeners for actions
+        row.querySelector('.action-btn.view').addEventListener('click', () => openDetailsModal(app));
+        row.querySelector('.action-btn.interview').addEventListener('click', () => {
+          if (isApplied) moveApplicantToInterview(app);
+        });
+        row.querySelector('.action-btn.approve').addEventListener('click', () => toggleApplicantApproval(app));
+        row.querySelector('.action-btn.delete').addEventListener('click', () => deleteApplicantRecord(app));
+
+        tableBody.appendChild(row);
+      });
     }
-
-    filteredApplicants.forEach((applicant) => {
-      const tr = document.createElement('tr');
-
-      // Status Timeline Badges
-      let badgeClass = 'blue';
-      if (applicant.status === 'Interview') badgeClass = 'orange';
-      else if (applicant.status === 'Approved') badgeClass = 'green';
-      else if (applicant.status === 'Screening') badgeClass = 'purple';
-
-      // Define conditional actions buttons based on current status
-      const isApproved = applicant.status === 'Approved';
-      const isInterview = applicant.status === 'Interview';
-
-      tr.innerHTML = `
-        <td>
-          <div style="font-weight: 700; color: var(--text-primary);">${applicant.fullName}</div>
-          <div style="font-size: 0.75rem; color: var(--text-dark);">${applicant.email}</div>
-        </td>
-        <td>
-          <div>${applicant.studentNumber || 'N/A'}</div>
-          <div style="font-size: 0.75rem; color: var(--text-dark);">${applicant.yearLevel || 'N/A'} - ${applicant.courseMajor || 'N/A'}</div>
-        </td>
-        <td>
-          <strong style="color: var(--accent-cyan);">${applicant.committee}</strong>
-        </td>
-        <td>
-          <span class="badge blue">${applicant.score} Match</span>
-        </td>
-        <td>
-          <span class="badge ${badgeClass}">${applicant.status}</span>
-        </td>
-        <td>
-          <div class="action-btns">
-            <!-- View Details Button -->
-            <button class="action-btn view-details-btn" title="View Evaluation Insights"><i class="fa-regular fa-eye"></i></button>
-            
-            <!-- Move to Interview Button -->
-            <button class="action-btn interview interview-candidate-btn" title="Move to Interview Phase" ${isInterview ? 'style="opacity:0.35; cursor:not-allowed;" disabled' : ''}><i class="fa-regular fa-comments"></i></button>
-            
-            <!-- Approve Button (checkmark icon if pending approval, reset rotation icon if already approved) -->
-            <button class="action-btn approve approve-candidate-btn" title="${isApproved ? 'Move back to Interview' : 'Approve for Onboarding'}"><i class="${isApproved ? 'fa-solid fa-rotate-left' : 'fa-solid fa-user-check'}"></i></button>
-            
-            <!-- Delete Button -->
-            <button class="action-btn delete delete-candidate-btn" title="Delete Candidate"><i class="fa-regular fa-trash-can"></i></button>
-          </div>
-        </td>
-      `;
-
-      // Bind button events
-      tr.querySelector('.view-details-btn').onclick = () => openDetailsModal(applicant);
-      tr.querySelector('.interview-candidate-btn').onclick = () => moveApplicantToInterview(applicant);
-      tr.querySelector('.approve-candidate-btn').onclick = () => toggleApplicantApproval(applicant);
-      tr.querySelector('.delete-candidate-btn').onclick = () => deleteApplicantRecord(applicant);
-
-      tableBody.appendChild(tr);
-    });
   }
-
-  /* ----------------------------------------------------
-     ACTION CONTROLLER FUNCTIONS
-     ---------------------------------------------------- */
   // Open Evaluation Modal
   function openDetailsModal(app) {
     modalName.textContent = app.fullName;
