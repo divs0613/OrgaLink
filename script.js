@@ -333,6 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
         yearLevel: yearLevelSelect.value,
         courseMajor: courseMajorSelect.value,
         fileName: uploadedFileName,
+        fileContent: uploadedFileContent,
         committee: assessment.committee,
         score: assessment.score,
         reasoning: assessment.reasoning,

@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Timeline & Checklist Boxes
   const timelineSteps = document.querySelectorAll('.timeline-step');
   const lockedBox = document.getElementById('checklist-locked-box');
+  const rejectedBox = document.getElementById('checklist-rejected-box');
   const unlockedBox = document.getElementById('checklist-unlocked-box');
   const checkboxes = document.querySelectorAll('.checklist-checkbox');
   const progressText = document.getElementById('checklist-progress-text');
@@ -78,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Render Checklist based on Vetting Approval Status
     if (applicant.status === 'Approved') {
       lockedBox.classList.add('hidden');
+      rejectedBox.classList.add('hidden');
       unlockedBox.classList.remove('hidden');
       
       // Load saved checkmarks (default to false if unset)
@@ -97,8 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       updateChecklistStats();
+    } else if (applicant.status === 'Rejected') {
+      unlockedBox.classList.add('hidden');
+      lockedBox.classList.add('hidden');
+      rejectedBox.classList.remove('hidden');
     } else {
       unlockedBox.classList.add('hidden');
+      rejectedBox.classList.add('hidden');
       lockedBox.classList.remove('hidden');
     }
 

@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalScore = document.getElementById('modal-score');
   const modalCommittee = document.getElementById('modal-committee');
   const modalReasoning = document.getElementById('modal-reasoning');
+  const modalDownloadBtn = document.getElementById('modal-download-btn');
 
   /* ----------------------------------------------------
      SESSION ROUTER & LIFECYCLE
@@ -178,6 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
           statusBadge = '<span class="badge green">Approved</span>';
         } else if (app.status === 'Interview') {
           statusBadge = '<span class="badge purple">Interview</span>';
+        } else if (app.status === 'Rejected') {
+          statusBadge = '<span class="badge red">Rejected</span>';
         } else {
           statusBadge = '<span class="badge blue">Applied</span>';
         }
@@ -185,13 +188,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Action Buttons
         const viewBtn = `<button class="action-btn view" title="View Profile Details"><i class="fa-regular fa-eye"></i></button>`;
         
-        // Interview Button (only visible/enabled for Applied candidates)
         const isApplied = app.status === 'Applied';
-        const interviewBtn = `<button class="action-btn interview ${isApplied ? '' : 'disabled'}" ${isApplied ? '' : 'disabled'} title="Move to Interview"><i class="fa-regular fa-comments"></i></button>`;
-
-        // Approval Toggle Button (toggles approved status)
         const isApproved = app.status === 'Approved';
-        const approveBtn = `<button class="action-btn approve ${isApproved ? 'active' : ''}" title="${isApproved ? 'Undo Approval' : 'Approve Candidate'}"><i class="${isApproved ? 'fa-solid fa-rotate-left' : 'fa-solid fa-check'}"></i></button>`;
+        const isRejected = app.status === 'Rejected';
+
+        // Interview Button (only active for Applied status)
+        const interviewBtn = `<button class="action-btn interview ${isApplied && !isRejected ? '' : 'disabled'}" ${isApplied && !isRejected ? '' : 'disabled'} title="Move to Interview"><i class="fa-regular fa-comments"></i></button>`;
+
+        // Approval Toggle Button (toggles approved status, disabled if Rejected)
+        const approveBtn = `<button class="action-btn approve ${isApproved ? 'active' : ''} ${isRejected ? 'disabled' : ''}" ${isRejected ? 'disabled' : ''} title="${isApproved ? 'Undo Approval' : 'Approve Candidate'}"><i class="${isApproved ? 'fa-solid fa-rotate-left' : 'fa-solid fa-check'}"></i></button>`;
+
+        // Rejection Toggle Button (toggles rejected status, disabled if Approved)
+        const rejectBtn = `<button class="action-btn reject ${isRejected ? 'active' : ''} ${isApproved ? 'disabled' : ''}" ${isApproved ? 'disabled' : ''} title="${isRejected ? 'Undo Rejection' : 'Reject Candidate'}"><i class="${isRejected ? 'fa-solid fa-rotate-left' : 'fa-solid fa-xmark'}"></i></button>`;
 
         // Delete Button
         const deleteBtn = `<button class="action-btn delete" title="Delete record"><i class="fa-regular fa-trash-can"></i></button>`;
@@ -221,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
               ${viewBtn}
               ${interviewBtn}
               ${approveBtn}
+              ${rejectBtn}
               ${deleteBtn}
             </div>
           </td>
@@ -229,9 +238,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Event listeners for actions
         row.querySelector('.action-btn.view').addEventListener('click', () => openDetailsModal(app));
         row.querySelector('.action-btn.interview').addEventListener('click', () => {
-          if (isApplied) moveApplicantToInterview(app);
+          if (isApplied && !isRejected) moveApplicantToInterview(app);
         });
-        row.querySelector('.action-btn.approve').addEventListener('click', () => toggleApplicantApproval(app));
+        row.querySelector('.action-btn.approve').addEventListener('click', () => {
+          if (!isRejected) toggleApplicantApproval(app);
+        });
+        row.querySelector('.action-btn.reject').addEventListener('click', () => {
+          if (!isApproved) toggleApplicantRejection(app);
+        });
         row.querySelector('.action-btn.delete').addEventListener('click', () => deleteApplicantRecord(app));
 
         tableBody.appendChild(row);
@@ -252,6 +266,29 @@ document.addEventListener('DOMContentLoaded', () => {
     modalScore.textContent = `${displayScore} Match`;
     modalCommittee.textContent = app.committee;
     modalReasoning.textContent = app.reasoning;
+
+    // File Download Handler
+    modalDownloadBtn.onclick = () => {
+      if (!app.fileContent) {
+        // Fallback for older mock applicants
+        const mockSummary = `JPCS-APC Applicant Profile Summary\n=================================\nFull Name: ${app.fullName}\nEmail: ${app.email}\nStudent ID: ${app.studentNumber || 'N/A'}\nContact Number: ${app.contactNumber || 'N/A'}\nCourse & Year: ${app.courseMajor || 'N/A'} - ${app.yearLevel || 'N/A'}\nRecommended Committee: ${app.committee}\nMatch Score: ${displayScore}\n\nEvaluation Reasoning:\n${app.reasoning}\n=================================`;
+        const blob = new Blob([mockSummary], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${app.fullName.replace(/\s+/g, '_')}_profile.txt`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } else {
+        const blob = new Blob([app.fileContent], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = app.fileName || 'portfolio.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    };
 
     modal.classList.remove('hidden');
   }
@@ -281,6 +318,25 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         // Approve
         applicants[idx].status = 'Approved';
+      }
+      localStorage.setItem('orgalink_applicants', JSON.stringify(applicants));
+      renderDashboard();
+    }
+  }
+
+  // Toggle rejection status
+  function toggleApplicantRejection(app) {
+    let applicants = JSON.parse(localStorage.getItem('orgalink_applicants')) || [];
+    const idx = applicants.findIndex(item => item.email.toLowerCase() === app.email.toLowerCase());
+
+    if (idx > -1) {
+      const currentStatus = applicants[idx].status;
+      if (currentStatus === 'Rejected') {
+        // Toggle back to Applied
+        applicants[idx].status = 'Applied';
+      } else {
+        // Reject
+        applicants[idx].status = 'Rejected';
       }
       localStorage.setItem('orgalink_applicants', JSON.stringify(applicants));
       renderDashboard();
