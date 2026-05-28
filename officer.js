@@ -196,6 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Delete Button
         const deleteBtn = `<button class="action-btn delete" title="Delete record"><i class="fa-regular fa-trash-can"></i></button>`;
 
+        // Ensure there is only one percent sign
+        const scoreStr = app.score.toString();
+        const displayScore = scoreStr.endsWith('%') ? scoreStr : `${scoreStr}%`;
+
         row.innerHTML = `
           <td>
             <div style="display: flex; flex-direction: column;">
@@ -210,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </td>
           <td><span class="placement-badge" style="margin: 0; padding: 0.15rem 0.5rem; font-size: 0.75rem;">${app.committee}</span></td>
-          <td><strong>${app.score}%</strong></td>
+          <td><strong>${displayScore}</strong></td>
           <td>${statusBadge}</td>
           <td>
             <div class="action-btns">
@@ -243,7 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
     modalCourseYear.textContent = `${app.courseMajor || 'N/A'} - ${app.yearLevel || 'N/A'}`;
     modalFilename.textContent = app.fileName || 'N/A';
     
-    modalScore.textContent = `${app.score} Match`;
+    const scoreStr = app.score.toString();
+    const displayScore = scoreStr.endsWith('%') ? scoreStr : `${scoreStr}%`;
+    modalScore.textContent = `${displayScore} Match`;
     modalCommittee.textContent = app.committee;
     modalReasoning.textContent = app.reasoning;
 
